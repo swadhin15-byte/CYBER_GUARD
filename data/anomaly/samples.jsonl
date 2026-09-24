@@ -1,0 +1,15 @@
+{"user":"r.mehta","asset":"Okta SSO","action":"login","ip":"103.21.244.8","asn":"AS14061","geo":"Ashburn, US","device_id":"dev-9f21","session_id":"s-4411","volume":0,"baseline_volume":0}
+{"user":"r.mehta","asset":"Okta SSO","action":"login","ip":"49.36.12.7","geo":"Kolkata, IN","device_id":"dev-1a02","session_id":"s-4412"}
+{"user":"svc-billing","asset":"S3 billing bucket","action":"object_read","ip":"10.4.2.18","geo":"Mumbai, IN","device_id":"svc-node-2","volume":18400,"baseline_volume":1020}
+{"user":"a.okafor","asset":"VPN gateway","action":"mfa_push","ip":"102.89.44.19","geo":"Lagos, NG","device_id":"dev-77bc","mfa_result":"denied"}
+{"user":"a.okafor","asset":"VPN gateway","action":"mfa_push","ip":"102.89.44.19","geo":"Lagos, NG","device_id":"dev-77bc","mfa_result":"denied"}
+{"user":"a.okafor","asset":"VPN gateway","action":"mfa_push","ip":"102.89.44.19","geo":"Lagos, NG","device_id":"dev-77bc","mfa_result":"denied"}
+{"user":"a.okafor","asset":"VPN gateway","action":"mfa_push","ip":"102.89.44.19","geo":"Lagos, NG","device_id":"dev-77bc","mfa_result":"denied"}
+{"user":"a.okafor","asset":"VPN gateway","action":"mfa_push","ip":"102.89.44.19","geo":"Lagos, NG","device_id":"dev-77bc","mfa_result":"denied"}
+{"user":"a.okafor","asset":"VPN gateway","action":"mfa_push","ip":"102.89.44.19","geo":"Lagos, NG","device_id":"dev-77bc","mfa_result":"approved"}
+{"user":"unknown","asset":"Exchange Online","action":"auth_failure","ip":"45.147.230.11","asn":"AS49981","geo":"Moscow, RU","device_id":"dev-spray","failed_accounts":74}
+{"user":"p.narayan","asset":"Payroll portal","action":"session_use","ip":"49.36.12.90","geo":"Kolkata, IN","device_id":"dev-5c31","session_id":"s-9002"}
+{"user":"p.narayan","asset":"Payroll portal","action":"session_use","ip":"185.243.115.22","asn":"AS16509","geo":"Frankfurt, DE","device_id":"dev-other","session_id":"s-9002"}
+{"user":"svc-deploy","asset":"Admin API","action":"privileged_call","ip":"3.120.44.9","asn":"AS16509","geo":"Frankfurt, DE","device_id":"ci-runner","volume":90,"baseline_volume":80}
+{"user":"k.ibrahim","asset":"Git server","action":"login","ip":"49.36.12.44","geo":"Kolkata, IN","device_id":"dev-2b18","session_id":"s-7781"}
+{"user":"s.dutta","asset":"Okta SSO","action":"login","ip":"49.36.12.51","geo":"Kolkata, IN","device_id":"dev-3c99","session_id":"s-7782"}

@@ -1,0 +1,12 @@
+# Render blueprint. Push this repo, then New > Blueprint and point at it.
+# Render supports websockets on all plans, which the live incident feed needs.
+services:
+  - type: web
+    name: cyberguard
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: CYBERGUARD_SEED
+        value: "1"

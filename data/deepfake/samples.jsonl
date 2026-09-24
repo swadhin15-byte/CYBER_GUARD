@@ -1,0 +1,5 @@
+{"filename":"cfo_wire_authorisation.mp4","uploader":"finance-ops","claimed_identity":"CFO","duration_s":41,"signals":{"face_boundary_artefacts":0.9,"blink_rate_anomaly":0.82,"lip_sync_drift_ms":120,"compression_mismatch":0.7}}
+{"filename":"urgent_payment_release.wav","uploader":"finance-ops","claimed_identity":"Head of Finance","duration_s":18,"signals":{"synthetic_prosody":0.88,"missing_room_reverb":0.75,"spectral_gap_high_freq":0.83}}
+{"filename":"recruiter_profile.jpg","uploader":"external-monitor","claimed_identity":"l.tanaka","signals":{"face_embedding_match":0.95,"image_previously_indexed":0.7,"account_age_days":4}}
+{"filename":"press_statement_photo.png","uploader":"comms","claimed_identity":"CEO","signals":{"generative_noise_fingerprint":0.74,"lighting_inconsistency":0.66}}
+{"filename":"town_hall_recording.mp4","uploader":"comms","claimed_identity":"CEO","duration_s":900,"signals":{"compression_mismatch":0.12}}

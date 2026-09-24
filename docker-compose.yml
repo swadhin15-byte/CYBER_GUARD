@@ -1,0 +1,8 @@
+services:
+  cyberguard:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      CYBERGUARD_SEED: "1"      # set to 0 for an empty board
+    restart: unless-stopped
