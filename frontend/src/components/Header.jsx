@@ -1,38 +1,115 @@
 import { NavLink } from 'react-router-dom'
 import BrandMark from './BrandMark'
 
-export default function Header({ live, onToggleLive, theme, onToggleTheme, error, user, onLogout }) {
+export default function Header({
+  live,
+  onToggleLive,
+  theme,
+  onToggleTheme,
+  error,
+  user,
+  onLogout
+}) {
   return (
     <header className="top">
       <div className="top-in">
+
+        {/* ================= BRAND ================= */}
         <div className="brand">
           <BrandMark />
-          <b>CYBERGUARD</b>
-          <span>Threat &amp; impersonation operations</span>
+
+          <div className="brand-text">
+            <b>CYBERGUARD</b>
+            <span>Threat &amp; impersonation operations</span>
+          </div>
         </div>
 
+        {/* ================= NAVIGATION ================= */}
         <nav className="nav">
-          <NavLink to="/" end>Overview</NavLink>
-          <NavLink to="/incidents">Incidents</NavLink>
-          <NavLink to="/simulate">Simulate</NavLink>
+
+          <NavLink to="/" end>
+            <span className="nav-icon">◈</span>
+            <span>Overview</span>
+          </NavLink>
+
+          <NavLink to="/incidents">
+            <span className="nav-icon">◉</span>
+            <span>Incidents</span>
+          </NavLink>
+
+          <NavLink to="/simulate">
+            <span className="nav-icon">⚡</span>
+            <span>Simulate</span>
+          </NavLink>
+
         </nav>
 
-        <span className="pill">
-          <i className={`dot${live ? ' live' : ''}${error ? ' err' : ''}`} />
-          {error ? 'Backend unreachable' : live ? 'Ingesting' : 'Ingest paused'}
+        {/* ================= SYSTEM STATUS ================= */}
+        <span
+          className={`pill system-pill ${
+            error ? 'system-error' : live ? 'system-live' : 'system-paused'
+          }`}
+        >
+          <i
+            className={`dot${live ? ' live' : ''}${error ? ' err' : ''}`}
+          />
+
+          <span className="status-text">
+            {error
+              ? 'Backend unreachable'
+              : live
+                ? 'Ingesting'
+                : 'Ingest paused'}
+          </span>
         </span>
-        <button className={`btn${live ? ' on' : ''}`} onClick={onToggleLive}>
+
+        {/* ================= LIVE INGEST ================= */}
+        <button
+          className={`btn header-action live-control${live ? ' on' : ''}`}
+          onClick={onToggleLive}
+        >
+          <span className="button-icon">
+            {live ? 'Ⅱ' : '▶'}
+          </span>
+
           {live ? 'Pause live ingest' : 'Start live ingest'}
         </button>
-        <button className="btn" onClick={onToggleTheme}>{theme === 'dark' ? 'Light' : 'Dark'}</button>
 
-        {user && (
-          <span className="user-chip">
-            <span className="user-avatar">{(user.name || user.username || '?')[0].toUpperCase()}</span>
-            <span className="user-name hide-sm">{user.name || user.username}</span>
-            <button className="btn" onClick={onLogout}>Sign out</button>
+        {/* ================= THEME ================= */}
+        <button
+          className="btn header-action theme-control"
+          onClick={onToggleTheme}
+        >
+          <span className="button-icon">
+            {theme === 'dark' ? '☀' : '◐'}
           </span>
+
+          {theme === 'dark' ? 'Light' : 'Dark'}
+        </button>
+
+        {/* ================= USER ================= */}
+        {user && (
+          <div className="user-chip">
+
+            <span className="user-avatar">
+              {(user.name || user.username || '?')[0].toUpperCase()}
+            </span>
+
+            <span className="user-name hide-sm">
+              {user.name || user.username}
+            </span>
+
+            <button
+              className="btn signout-btn"
+              onClick={onLogout}
+            >
+              <span className="button-icon">↪</span>
+              Sign out
+            </button>
+
+          </div>
         )}
+
       </div>
     </header>
   )
