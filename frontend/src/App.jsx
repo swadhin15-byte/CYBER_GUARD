@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate
+} from 'react-router-dom'
 
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
@@ -7,6 +12,7 @@ import Incidents from './pages/Incidents'
 import Simulate from './pages/Simulate'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Landing from './pages/Landing'
 
 import {
   getEvents,
@@ -52,6 +58,9 @@ const EMPTY_STATS = {
 
 export default function App() {
 
+  const navigate = useNavigate()
+  const location = useLocation()
+
   // ------------------------------------------------------------------------
   // AUTHENTICATION
   // ------------------------------------------------------------------------
@@ -59,6 +68,7 @@ export default function App() {
   const [user, setUser] = useState(() => getStoredUser())
 
   const [showSignup, setShowSignup] = useState(false)
+
 
   // ------------------------------------------------------------------------
   // DASHBOARD STATE
@@ -93,11 +103,17 @@ export default function App() {
   // ------------------------------------------------------------------------
 
   const [theme, setTheme] = useState(() => {
+
     try {
+
       return localStorage.getItem('cg-theme') || ''
+
     } catch {
+
       return ''
+
     }
+
   })
 
 
@@ -143,7 +159,6 @@ export default function App() {
       setError('')
 
 
-      // Select newest incident if nothing is selected.
       setSelectedId((current) =>
         current ?? eventsResponse.events[0]?.id ?? null
       )
@@ -166,7 +181,9 @@ export default function App() {
   useEffect(() => {
 
     if (user) {
+
       refresh()
+
     }
 
   }, [user, refresh])
@@ -243,17 +260,16 @@ export default function App() {
   useEffect(() => {
 
     if (!live || !user) {
+
       return undefined
+
     }
 
 
-    // Connect to backend WebSocket.
     const closeSocket = subscribe((incident) => {
 
-      // Add newest incident to the beginning.
       setEvents((previous) => {
 
-        // Avoid duplicate incident IDs.
         const withoutDuplicate =
           previous.filter(
             (item) => item.id !== incident.id
@@ -267,11 +283,9 @@ export default function App() {
       })
 
 
-      // Automatically select newest incident.
       setSelectedId(incident.id)
 
 
-      // Log critical events.
       if (incident.score >= 86) {
 
         log(
@@ -287,7 +301,6 @@ export default function App() {
       }
 
 
-      // Refresh dashboard statistics.
       getStats()
         .then(setStats)
         .catch(() => {})
@@ -295,7 +308,6 @@ export default function App() {
     })
 
 
-    // Backup polling every 15 seconds.
     const poll = setInterval(() => {
 
       refresh()
@@ -303,7 +315,6 @@ export default function App() {
     }, 15000)
 
 
-    // Cleanup when live ingest is paused/unmounted.
     return () => {
 
       closeSocket()
@@ -382,7 +393,9 @@ export default function App() {
       )
 
     } catch {
+
       // Ignore localStorage errors.
+
     }
 
   }, [resolvedTheme])
@@ -429,7 +442,6 @@ export default function App() {
 
         log('Live ingest started')
 
-        // Immediately refresh existing data.
         await refresh()
 
       }
@@ -589,7 +601,9 @@ export default function App() {
 
 
     if (!confirmed) {
+
       return
+
     }
 
 
@@ -600,7 +614,6 @@ export default function App() {
 
     try {
 
-      // The backend reset endpoint also stops live ingest.
       await resetDemoData()
 
 
@@ -658,28 +671,37 @@ export default function App() {
 
 
   // ------------------------------------------------------------------------
-  // LOGIN SCREEN
+  // LOGIN / SIGNUP
   // ------------------------------------------------------------------------
-if (!user) {
 
-  if (showSignup) {
+  if (!user) {
+
+    if (showSignup) {
+
+      return (
+        <Signup
+          onSignup={() => setShowSignup(false)}
+        />
+      )
+
+    }
+
 
     return (
-      <Signup
-        onSignup={() => setShowSignup(false)}
+      <Login
+        onLogin={(loggedInUser) => {
+
+          setUser(loggedInUser)
+
+          navigate('/landing')
+
+        }}
+
+        onSignup={() => setShowSignup(true)}
       />
     )
 
   }
-
-  return (
-    <Login
-      onLogin={setUser}
-      onSignup={() => setShowSignup(true)}
-    />
-  )
-
-}
 
 
   // ------------------------------------------------------------------------
@@ -688,27 +710,43 @@ if (!user) {
 
   return (
     <>
+{location.pathname !== '/landing' && (
+  <Header
+    user={user}
 
-      <Header
-        user={user}
+    onLogout={logout}
 
-        onLogout={logout}
+    live={live}
 
-        live={live}
+    onToggleLive={toggleLive}
 
-        onToggleLive={toggleLive}
+    theme={resolvedTheme}
 
-        theme={resolvedTheme}
+    onToggleTheme={toggleTheme}
 
-        onToggleTheme={toggleTheme}
+    error={error}
 
-        error={error}
-
-        onResetDemo={onResetDemo}
-      />
+    onResetDemo={onResetDemo}
+  />
+)}
 
 
       <Routes>
+
+
+        {/* ------------------------------------------------------------ */}
+        {/* LANDING PAGE                                                 */}
+        {/* ------------------------------------------------------------ */}
+
+        <Route
+  path="/landing"
+  element={
+    <Landing
+      onDashboard={() => navigate('/')}
+      onLogout={logout}
+    />
+  }
+/>
 
         {/* ------------------------------------------------------------ */}
         {/* OVERVIEW / DASHBOARD                                         */}
